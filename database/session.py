@@ -9,4 +9,4 @@ async def save_videos(db: AsyncSession, videos):
             title=video[0], description=video[1], views=video[2], link=video[3]
         )
         db.add(db_video)
-    await db.commit()  # Используем await для вызова commit
+    await db.commit()

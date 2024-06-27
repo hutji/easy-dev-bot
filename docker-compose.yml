@@ -1,0 +1,35 @@
+version: '3.8'
+
+name: easy-dev-bot
+
+services:
+  db:
+    image: postgres:latest
+    container_name: db
+    restart: always
+    env_file:
+      - .env
+    hostname: db
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+
+  bot:
+    build:
+      context: .
+    env_file:
+      - .env
+    volumes:
+      - ./:/app
+    depends_on:
+      - db
+    command: ["python", "telegram_bot.py"]
+    container_name: bot
+
+volumes:
+  pgdata:
