@@ -43,6 +43,7 @@ class Parser:
                         "__wdpVideoOptionsRow__views-count"
                     ),
                 ).text.strip()
+                video_views = int("".join(filter(str.isdigit, video_views)))
                 channel_name = video_soup.find(
                     "span",
                     class_=(
